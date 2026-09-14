@@ -1,0 +1,51 @@
+Act as a principal power platfrom architect at Microsoft with decade experience. I have designed a project structure template for C# plugin developmnet. Here is the idea each table will have one folder with table name and it contains abstract base class with table name inherited from Iplugin base class. This class will have methods that are comonly used across pre and post operations . And you have one class for each operation which extends from abstract base class. these use table sepcific common methods from absctract base class and its own specific methods. there is folder called utilils which has class for dataverse web api operations and other class for commoin helpers. Evalaute this approach and provide how is this idea and where can be improved. Fianlly, If you have to recommend a project structure generate a project structure for c# plugin development for all operations on a tabe which will work for enterpise in 2026. The project structure have it clear instrctuion with sln and project file that can be imported in github and shared with developers to follow.
+
+Copilot said:
+
+Reasoning completed in 21 steps
+I'll evaluate the design first, then build you an actual repo scaffold you can push to GitHub.
+
+No .NET SDK here, so I'll hand-author the scaffold to be restore-clean on a dev machine.
+
+Now the framework layer — this is where your per-table base class gets replaced.
+
+Now the Account vertical slice — services (composition) instead of a per-table base class.
+
+Now the pure-domain project, a Custom API example, and tests.
+
+Now the docs, CI, and supporting repo files.
+
+Evaluation
+Your instinct on folder-per-table is correct and I'd keep it — it's a vertical slice, and it means a change request about Accounts touches exactly one directory. Your instinct on one class per operation is also correct. The problem is the middle layer: the per-table abstract base class that implements IPlugin.
+
+What's working
+Element	Verdict
+Folder per table	Keep. Scales to 200 tables without becoming a swamp.
+One class per operation	Keep, but sharpen it — one class per registered step, not per operation. Update often needs both a pre-op and a post-op step, and the class name should tell you which.
+Utils for common helpers	Keep the idea, split the class. A single CommonHelpers becomes a 3,000-line dumping ground by month six.
+What will hurt you at enterprise scale
+1. The per-table base class is the main flaw. Four concrete failures:
+
+Fragile base class. AccountPluginBase accumulates every helper any step ever needed. After two years it's 40 protected methods, and every step inherits all 40 whether it uses one or thirty. Changing a signature forces re-review of every unrelated step on that table.
+You spend your single inheritance slot on the wrong thing. Because the table base implements IPlugin, your genuine cross-cutting concerns — tracing, exception shaping, depth guards, context construction — have to be duplicated per table base or pushed into a second base layer, producing a three-deep hierarchy.
+Pre and post have genuinely different shapes. Pre-op mutates the Target; post-op reads images and writes elsewhere. A shared parent invites helpers that silently behave differently by stage — exactly where stage-dependent bugs live.
+Testability. You can't substitute one shared method; you must satisfy the whole base class surface.
+The fix is composition: one PluginBase for infrastructure only, and table behaviour in small focused Services that handlers construct.
+
+2. A "Dataverse Web API operations" class inside a plugin is an architectural defect. Inside the sandbox you already have IOrganizationService injected. Going out over HTTP leaves the transaction (your writes no longer roll back with the operation), burns your 2-minute budget on network latency, and requires the sandbox to hold credentials it shouldn't have. For genuine external calls, use an async step, a Service Endpoint, or Power Automate.
+
+3. Missing entirely from the template: business rules separated from SDK types (so they're testable in milliseconds), a repository boundary for queries, registration metadata living next to the code, recursion control beyond Depth, secrets handling via environment variables, unit tests, signing, and ALM.
+
+What I built you
+A working repo scaffold — solution file, four projects, CI/CD, docs. Key moves:
+
+PluginBase is the only class implementing IPlugin. It owns context construction, depth guards, tracing with elapsed-ms, and exception shaping to a user-safe message plus correlation ID. Zero table knowledge.
+Tables/Account/Services/ replaces your abstract base — AccountValidationService, AccountRiskService. Handlers compose what they need.
+Contoso.Crm.Domain (netstandard2.0, no SDK reference) holds pure rules. This is the code auditors read and where coverage should be ~100%.
+Shared/Repositories/ — every query in one reviewable place, with paging done correctly.
+[PluginRegistration] attributes make the code the source of truth for step configuration, so CI can detect drift.
+All nine Account step types as worked examples, including the two everyone gets wrong: Associate (no Target entity, filter on relationship name) and deactivation (it's an Update on statecode — SetStateDynamicEntity is deprecated).
+Plugin package (.nupkg) output, not a bare DLL, so dependent assemblies deploy without ILMerge.
+contoso-dataverse-plugins.zip — unzip, git init, push. README.md — full layout, onboarding steps, and the nine non-negotiable rules to hand developers.
+
+One thing I'd push back on if this were a design review: before writing any RetrieveMultiple plugin, exhaust column-level security and calculated columns first. Those run on every grid, lookup, view and export in the system.
