@@ -1,0 +1,23 @@
+<Project>
+  <!-- Applies to every project in the repo. One place to change TFM, signing, analyzers. -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable> <!-- net462 + CrmSdk: nullable adds noise, keep off in plugin assembly -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>CS1591</WarningsNotAsErrors>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-Recommended</AnalysisLevel>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <Company>Contoso</Company>
+    <Product>Contoso Dataverse Platform</Product>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <!-- Dataverse requires plugin assemblies to be strong-named. -->
+  <PropertyGroup Condition="'$(IsPluginAssembly)' == 'true'">
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)build\Contoso.Crm.snk</AssemblyOriginatorKeyFile>
+    <TargetFramework>net462</TargetFramework>
+  </PropertyGroup>
+</Project>

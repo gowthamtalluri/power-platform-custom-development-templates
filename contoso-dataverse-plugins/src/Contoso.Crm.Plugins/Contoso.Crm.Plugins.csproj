@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Dataverse sandbox runs .NET Framework 4.6.2. Do NOT change. -->
+    <IsPluginAssembly>true</IsPluginAssembly>
+    <AssemblyName>Contoso.Crm.Plugins</AssemblyName>
+    <RootNamespace>Contoso.Crm.Plugins</RootNamespace>
+    <!-- Emitted as a plugin package (.nupkg) so dependent assemblies deploy without ILMerge. -->
+    <PackageId>Contoso.Crm.Plugins</PackageId>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.PowerApps.MSBuild.Plugin" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contoso.Crm.Domain\Contoso.Crm.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Contoso.Crm.Plugins.Tests" Key="$(AssemblyOriginatorPublicKey)" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,61 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C5BC0E3A-605E-45A8-B8BB-4993151C09BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{68BB01DF-A0DC-465A-B965-E30F5D1F740D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contoso.Crm.Plugins", "src\Contoso.Crm.Plugins\Contoso.Crm.Plugins.csproj", "{C205FE4E-86E8-4C99-82B2-5D076BC9F87D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contoso.Crm.Domain", "src\Contoso.Crm.Domain\Contoso.Crm.Domain.csproj", "{83F5E9F4-F9EF-44DB-B654-8F6E29D5B334}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contoso.Crm.Plugins.Tests", "tests\Contoso.Crm.Plugins.Tests\Contoso.Crm.Plugins.Tests.csproj", "{BBBA368D-1C4E-48CC-9773-5A5F1AEC2AA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contoso.Crm.Domain.Tests", "tests\Contoso.Crm.Domain.Tests\Contoso.Crm.Domain.Tests.csproj", "{8C1E251F-641C-4991-BDDF-7C135F24870D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_root", "_root", "{CC59C073-4432-4679-B673-299F378CC4BE}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		README.md = README.md
+		.editorconfig = .editorconfig
+		nuget.config = nuget.config
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C205FE4E-86E8-4C99-82B2-5D076BC9F87D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C205FE4E-86E8-4C99-82B2-5D076BC9F87D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C205FE4E-86E8-4C99-82B2-5D076BC9F87D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C205FE4E-86E8-4C99-82B2-5D076BC9F87D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83F5E9F4-F9EF-44DB-B654-8F6E29D5B334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83F5E9F4-F9EF-44DB-B654-8F6E29D5B334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83F5E9F4-F9EF-44DB-B654-8F6E29D5B334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83F5E9F4-F9EF-44DB-B654-8F6E29D5B334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBBA368D-1C4E-48CC-9773-5A5F1AEC2AA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBBA368D-1C4E-48CC-9773-5A5F1AEC2AA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBBA368D-1C4E-48CC-9773-5A5F1AEC2AA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBBA368D-1C4E-48CC-9773-5A5F1AEC2AA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C1E251F-641C-4991-BDDF-7C135F24870D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C1E251F-641C-4991-BDDF-7C135F24870D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C1E251F-641C-4991-BDDF-7C135F24870D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C1E251F-641C-4991-BDDF-7C135F24870D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C205FE4E-86E8-4C99-82B2-5D076BC9F87D} = {C5BC0E3A-605E-45A8-B8BB-4993151C09BA}
+		{83F5E9F4-F9EF-44DB-B654-8F6E29D5B334} = {C5BC0E3A-605E-45A8-B8BB-4993151C09BA}
+		{BBBA368D-1C4E-48CC-9773-5A5F1AEC2AA4} = {68BB01DF-A0DC-465A-B965-E30F5D1F740D}
+		{8C1E251F-641C-4991-BDDF-7C135F24870D} = {68BB01DF-A0DC-465A-B965-E30F5D1F740D}
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70CD3912-FD50-44D3-8DC8-881BA6C90B9A}
+	EndGlobalSection
+EndGlobal

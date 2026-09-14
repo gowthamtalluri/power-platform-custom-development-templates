@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Pure business rules. NO reference to Microsoft.Xrm.Sdk. Fast to unit test. -->
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <IsPluginAssembly>false</IsPluginAssembly>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)..\..\build\Contoso.Crm.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>Contoso.Crm.Domain</RootNamespace>
+  </PropertyGroup>
+</Project>
